@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+	"http://struts.apache.org/dtds/struts-2.5.dtd">
+
+<struts>
+	<package name="default" namespace="/" extends="struts-default">
+	   <!-- 配置拦截器 -->
+	   <interceptors>
+	   	<interceptor name="firstinterceptor" class="interceptor.FIrstInterceptor" />
+	   	<interceptor name="secondinterceptor" class="interceptor.SecondInterceptor" />
+	   	<interceptor name="thirdinterceptor" class="interceptor.ThirdInterceptor" />
+	   	<!-- 配置拦截器栈 -->
+	   	<interceptor-stack name="stack01">
+	   		<interceptor-ref name="firstinterceptor"></interceptor-ref>
+	   		<interceptor-ref name="secondinterceptor"></interceptor-ref>
+	   		<interceptor-ref name="thirdinterceptor"></interceptor-ref>
+	   	</interceptor-stack>
+	   </interceptors>
+	   
+	   <!-- 配置firstaction -->
+	    <action name="firstaction" class="action.FirstAction">
+	    	<result type="chain">secondaction</result>    
+	    	<interceptor-ref name="stack01"></interceptor-ref>	
+	    </action>
+	    <!-- 配置secondaction -->
+	    <action name="secondaction" class="action.SecondAction">
+	    <result>/success.jsp</result>    
+	    </action>
+    </package>
+    <constant name="struts.enable.DynamicMethodInvocation" value="false" />
+</struts>
